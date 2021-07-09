@@ -49,7 +49,32 @@ function insertionSort (arr) {
 
 // merge sort - O(n*Logn) - stable
 function mergeSort (arr) {
-    return arr;
+    const len = arr.length;
+    if (len < 2) {
+        return arr;
+    }
+    const mid = Math.floor(len / 2);
+    const left = arr.slice(0, mid);
+    const right = arr.slice(mid);
+
+    return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge (left, right) {
+    const result = [];
+    const lLen = left.length;
+    const rLen = right.length;
+    let lIdx = 0;
+    let rIdx = 0;
+
+    while (lIdx < lLen && rIdx < rLen) {
+        if (left[lIdx] < right[rIdx]) {
+            result.push(left[lIdx++]);
+        } else {
+            result.push(right[rIdx++]);
+        }
+    }
+    return result.concat(left.slice(lIdx), right.slice(rIdx));
 }
 
 console.clear();
