@@ -77,6 +77,38 @@ function merge (left, right) {
     return result.concat(left.slice(lIdx), right.slice(rIdx));
 }
 
+// quick sort - O(n^2) - unstable
+function quickSort (arr, left, right) {
+    const len = arr.length;
+    if (left < right) {
+        const pivot = right;
+        const partitionIndex = partition(arr, pivot, left, right);
+        quickSort(arr, left, partitionIndex - 1);
+        quickSort(arr, partitionIndex + 1, right);
+    }
+    return arr;
+}
+
+function partition (arr, pivot, left, right) {
+    const pivotValue = arr[pivot];
+    let partitionIndex = left;
+
+    for (let i = left; i < right; i++) {
+        if (arr[i] < pivotValue) {
+            swap(arr, i, partitionIndex);
+            partitionIndex++;
+        }
+    }
+    swap(arr, right, partitionIndex);
+    return partitionIndex;
+}
+
+function swap (arr, i, j) {
+    let temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
 console.clear();
 
 console.log("%c> Bubble Sort - O(n^2)", "color: green");
@@ -88,5 +120,8 @@ console.log(selectionSort([54,76543,323,5453,645,2,7455,3457,7565,345,532656,787
 console.log("\n%c> Insertion Sort - O(n^2)", "color: green");
 console.log(insertionSort([54,76543,323,5453,645,2,7455,3457,7565,345,532656,787]));
 
-console.log("\n%c> Merge Sort - O(n^2)", "color: green");
+console.log("\n%c> Merge Sort - O(nlogn)", "color: green");
 console.log(mergeSort([54,76543,323,5453,645,2,7455,3457,7565,345,532656,787]));
+
+console.log("\n%c> Quick Sort - O(n^2)", "color: green");
+console.log(quickSort([54,76543,323,5453,645,2,7455,3457,7565,345,532656,787], 0, 11));
